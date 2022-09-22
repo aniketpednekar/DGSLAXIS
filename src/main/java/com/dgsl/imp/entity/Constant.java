@@ -127,7 +127,7 @@ public class Constant {
 				+ "You are requested to urgently take action on approval process for Deposit Rate change in application.\r\n"
 				+ "\r\n" + "Table:\r\n" + "Request No. ${requestNo} \r\n"
 				+ "Subject : Deposit Rate Change - Callable/Non-callable deposit w.e.f. ${depositRate}\r\n"
-				+ "Initiator: ${empID} (emp ID)\r\n" + "Department:${department}.\r\n" + "\r\n"
+				+ "Initiator: ${empID} (emp ID)\r\n" + "Department: ${department}.\r\n" + "\r\n"
 				+ "Click on the following link to view details:\r\n" + "https://${link}\r\n" + "\r\n" + "\r\n"
 				+ "This is system generated mail please do not reply to this mail.",
 				"Change in Rate of Interest on Term Depsosit");
@@ -138,7 +138,7 @@ public class Constant {
 	public static TestEntity getBodyEnity() {
 		TestEntity lEntity = new TestEntity();
 
-		lEntity.setDepartment("IMP");
+		lEntity.setDepartment("IMP ");
 		lEntity.setDepositRate("12358");
 		lEntity.setEmpID("145258");
 		lEntity.setLink("www.google.com");
