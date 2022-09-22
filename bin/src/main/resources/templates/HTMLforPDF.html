@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<style>
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	padding: 25px;
+}
+
+#logo img {
+	width: 200px;
+	height: 50px;
+}
+
+.dataClass {
+	margin-bottom: 20px;
+}
+
+.headPoint {
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+
+.ExTable table, th, td {
+	border: 1px solid black;
+	border-collapse: collapse;
+}
+</style>
+</head>
+<body>
+	<div id="logo" align="center">
+		<img
+			src='data:image/jpeg;base64,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' />
+	</div>
+	<br />
+	<div>
+		<h5>
+			GE and Head (Treasury Markets and WBP):
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CRO:
+			<br />
+			_______________________________________________________________________________________________________
+			<br /> AXIS/CO/TR/ALCONOTE/2021-22/013
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			08th November 2021 <br /> <br /> <br /> Recommended By: SVP and
+			Head (ALM)
+		</h5>
+	</div>
+	<br /> {DATA}
+
+	<div>{TABLE-DATA}</div>
+</body>
+</html>
