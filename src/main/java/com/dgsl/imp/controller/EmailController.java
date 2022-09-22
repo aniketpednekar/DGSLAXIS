@@ -1,15 +1,15 @@
 package com.dgsl.imp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.dgsl.imp.entity.Constant;
 import com.dgsl.imp.entity.EmailDetails;
 import com.dgsl.imp.service.EmailService;
 
-@Controller
+@RestController
 public class EmailController {
 
 	@Autowired
