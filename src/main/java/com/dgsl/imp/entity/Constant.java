@@ -138,7 +138,7 @@ public class Constant {
 	public static TestEntity getBodyEnity() {
 		TestEntity lEntity = new TestEntity();
 
-		lEntity.setDepartment("IMP");
+		lEntity.setDepartment("IMP ");
 		lEntity.setDepositRate("12358");
 		lEntity.setEmpID("145258");
 		lEntity.setLink("www.google.com");
