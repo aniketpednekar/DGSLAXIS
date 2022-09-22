@@ -62,7 +62,7 @@ body {
 $(document).ready(function(){
   $("#openModal").click(function(){
 		$.ajax({
-			url : "http://localhost:8080/getModalData",
+			url : "/getModalData",
 			type : "POST",
 			data : {
 
@@ -128,7 +128,7 @@ $(document).ready(function(){
 		var finalData = {'data' : dataArr};
 		
 		$.ajax({
-			url : "http://localhost:8080/saveModalData",
+			url : "/saveModalData",
 			type : "POST",
 			contentType: "application/text",
 			data : JSON.stringify(finalData),
@@ -152,7 +152,7 @@ $(document).ready(function(){
 	function download() {
 		var tableStr = document.getElementById("tableDiv").innerHTML;
 		var tableStr = encodeURIComponent($("#tableDiv").html());
-		location.href="http://localhost:8080/downloadPdf?table1=" + tableStr;
+		location.href="/downloadPdf?table1=" + tableStr;
 	}
 </script>
 
