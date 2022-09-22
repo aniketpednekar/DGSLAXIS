@@ -5,6 +5,7 @@ import java.util.Map;
 import org.apache.commons.text.StringSubstitutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,7 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public String sendMail(EmailDetails details) {
 		System.out.println("In sendMail");
+
 		try {
 			SimpleMailMessage mailMessage = new SimpleMailMessage();
 
@@ -34,16 +36,19 @@ public class EmailServiceImpl implements EmailService {
 
 			mailMessage.setFrom(sender);
 			mailMessage.setTo(details.getRecipient());
+			mailMessage.setCc(details.getRecipient());
 			mailMessage.setText(createMailBody(details.getMsgBody()));
 			mailMessage.setSubject(details.getSubject());
 
 			System.out.println("Sending Mail");
 			javaMailSender.send(mailMessage);
-			return "Mail Sent Successfully...";
-		} catch (Exception e) {
+
+		} catch (MailException e) {
 			e.printStackTrace();
-			return "Error while Sending Mail";
+			
 		}
+		return "Mail Sent Successfully...";
+
 	}
 
 	public String createMailBody(String mailBodyTemplate) {
