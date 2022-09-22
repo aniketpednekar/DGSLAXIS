@@ -139,7 +139,7 @@ public class Constant {
 		TestEntity lEntity = new TestEntity();
 
 		lEntity.setDepartment("IMP");
-		lEntity.setDepositRate("12358");
+		lEntity.setDepositRate("123518");
 		lEntity.setEmpID("145258");
 		lEntity.setLink("www.google.com");
 		lEntity.setRequestNo("DGSL123456");
