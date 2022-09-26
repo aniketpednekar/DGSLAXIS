@@ -100,7 +100,55 @@
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>pe</groupId>
+			<artifactId>pe</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\pe.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>Jace</groupId>
+			<artifactId>Jace</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\Jace.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>acmapi</groupId>
+			<artifactId>acmapi</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\acmapi.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>peResources</groupId>
+			<artifactId>peResources</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\peResources.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>stax-api</groupId>
+			<artifactId>stax-api</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\stax-api.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>xlxpScanner</groupId>
+			<artifactId>xlxpScanner</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\xlxpScanner.jar</systemPath>
+		</dependency>
+		<dependency>
+			<groupId>xlxpScannerUtils</groupId>
+			<artifactId>xlxpScannerUtils</artifactId>
+			<scope>system</scope>
+			<version>1.0</version>
+			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\xlxpScannerUtils.jar</systemPath>
+		</dependency>
 	</dependencies>
 
 	<build>
