@@ -60,9 +60,16 @@ body {
 
 <script>
 $(document).ready(function(){
+
+	$(".custom-file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+});
+
+
   $("#openModal").click(function(){
 		$.ajax({
-			url : "/getModalData",
+			url : "http://localhost:8080/getModalData",
 			type : "POST",
 			data : {
 
@@ -80,6 +87,36 @@ $(document).ready(function(){
 				var responseTextdata =  JSON.parse(responseText);
 				console.log(responseTextdata);
 				setUpModulBody(responseTextdata.data);
+			}
+		});
+  });
+  
+  
+  $("#UplodeFile").click(function(){
+	alert("dsd");
+		var formData = new FormData(document.getElementById("fileinfo"));
+		formData.append("label", "WEBUPLOAD");
+		
+		$.ajax({
+			url : "http://localhost:8080/uplodeFile",
+			type : "POST",
+			data : formData,
+			async: false,
+	          cache: false,
+	          contentType: false,
+	          enctype: 'multipart/form-data',
+	          processData: false,
+			error : function(jqXHR, textStatus, errorThrown) {
+				console.log("textStatus : " + textStatus);
+			},
+			beforeSend : function() {
+
+			},
+			complete : function(jqXHR, textStatus) {
+				console.log("textStatus : " + textStatus);
+			},
+			success : function(responseText) {
+				alert(responseText);
 			}
 		});
   });
@@ -128,7 +165,7 @@ $(document).ready(function(){
 		var finalData = {'data' : dataArr};
 		
 		$.ajax({
-			url : "/saveModalData",
+			url : "http://localhost:8080/saveModalData",
 			type : "POST",
 			contentType: "application/text",
 			data : JSON.stringify(finalData),
@@ -152,8 +189,11 @@ $(document).ready(function(){
 	function download() {
 		var tableStr = document.getElementById("tableDiv").innerHTML;
 		var tableStr = encodeURIComponent($("#tableDiv").html());
-		location.href="/downloadPdf?table1=" + tableStr;
+		location.href="http://localhost:8080/downloadPdf?table1=" + tableStr;
 	}
+	
+
+
 </script>
 
 </head>
@@ -255,5 +295,22 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<form id="fileinfo" name="fileinfo">
+		<div class="custom-file mb-3">
+			<input type="file" class="custom-file-input" id="customFile"
+				name="filename"> <label class="custom-file-label"
+				for="customFile">Choose file</label>
+		</div>
+		<br> <br> <br>
+		<div style="width: 100%; display: flex; justify-content: center;">
+			<button id="UplodeFile" type="button" class="btn btn-primary">Uplode
+				File</button>
+		</div>
+
+	</form>
 </body>
 </html>

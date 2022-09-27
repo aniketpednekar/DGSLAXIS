@@ -212,7 +212,7 @@ public class SaveDocument {
 		return lFileLocation;
 	}
 	
-	public String createCaseWithDocument1(ObjectStore objStr, ArrayList<String> pFileLocation, JSONObject pJson) {
+	public String saveDocument(ObjectStore objStr, ArrayList<String> pFileLocation, JSONObject pJson) {
 		Document doc = null;
 		String lResponse = "Fail";
 		Connection connection = null;
