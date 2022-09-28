@@ -1,17 +1,9 @@
 package com.dgsl.imp.utility;
 
+import java.io.UnsupportedEncodingException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Locale;
-import java.util.ResourceBundle;
-
 import javax.security.auth.Subject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.dgsl.imp.utility.ReadPropertyFile;
 import com.filenet.api.core.Connection;
 import com.filenet.api.core.Domain;
 import com.filenet.api.core.Factory;
@@ -20,107 +12,138 @@ import com.filenet.api.util.UserContext;
 
 public class ServerConnection {
 
-	private final static Logger logger = LoggerFactory.getLogger(ServerConnection.class);
-	private static ResourceBundle rb = ResourceBundle.getBundle("application", Locale.US);
-	static ReadPropertyFile bundle = ReadPropertyFile.getInstance();
-	UserContext gUserContext = null;
+//	private final static Logger logger = LoggerFactory.getLogger(ServerConnection.class);
+// static ReadPropertyFile bundle = ReadPropertyFile.getInstance();
+	UserContext lUser_Context = null;
 	boolean isConnection = false;
 
-	private String objectStore = "";
-	private String username = "";
-	private String password = "";
+	private String lObject_Store = "TOS";
+	private String lFileNet_URL = "http://10.254.9.59:9080/wsi/FNCEWS40MTOM/";
+	private String lUser_Name = "p8admin";
+	private String lPassword = "Password123";
 
+	public ObjectStore getObjectStore(String pSolution) throws Exception {
 
-	public Connection getConnMisc() {
+		// logger.info("Getting Object Store");
 
-		String uri = ReadPropertyFile.getInstance().getPropConst().getProperty("filnetUrl");
-		logger.info("URI  : " + uri);
-		// Make connection.
-		Connection conn = Factory.Connection.getConnection(uri);
-		// UserContext uses Jaas call to authenticate with server
-		String lStanzaName = "FileNetP8WSI";
-		logger.info("StanzaName : " + lStanzaName);
+		// getTOSDetails(pSolution);
 
-		logger.info("getConnMisc :::  username :: " + username + "  |  password :: " + password);
-
-		Subject subject = UserContext.createSubject(conn, username, password, lStanzaName);
-		UserContext.get().pushSubject(subject);
-		gUserContext = UserContext.get();
-//		UserContext.get().popSubject();
-		setConnection(true);
-		logger.info("Exiting getConn()");
-		return conn;
-	}
-
-	public Domain getDomainMisc() {
-		// retrives an instance of domain class
-		logger.info("Inside getDomain()");
-		Connection lConnection = getConnMisc();
-		Domain domain = Factory.Domain.fetchInstance(lConnection, null, null);
-		logger.info("Domain: " + domain.get_Name());
-		System.out.println("Domain: " + domain.get_Name());
-		logger.info("Exiting getDomain()");
-		return domain;
-	}
-
-	public ObjectStore getObjectStore(String pSolution) throws SQLException {
-		// To fetch required object store by passing objstore name
-		logger.info("Inside getObjectStore()");
-		Domain lDomain = getDomainMisc();
-		ObjectStore objStore = Factory.ObjectStore.fetchInstance(lDomain, objectStore, null);
-		System.out.println("Object Store =" + objStore.get_DisplayName());
-		logger.info("Object Store =" + objStore.get_DisplayName());
-		logger.info("Exiting getObjectStore()");
-		return objStore;
-	}
-
-	public Connection getConn() {
-
-		String uri = ReadPropertyFile.getInstance().getPropConst().getProperty("filnetUrl");
-		String username = ReadPropertyFile.getInstance().getPropConst().getProperty("filnetUsername");
-		String password = ReadPropertyFile.getInstance().getPropConst().getProperty("filnetPassword");
-
-		// Make connection.
-		Connection conn = Factory.Connection.getConnection(uri);
-		// UserContext uses Jaas call to authenticate with server
-		String lStanzaName = "FileNetP8WSI";
-		logger.info("StanzaName : " + lStanzaName);
-		Subject subject = UserContext.createSubject(conn, username, password, lStanzaName);
-		UserContext.get().pushSubject(subject);
-		gUserContext = UserContext.get();
-//		UserContext.get().popSubject();
-		setConnection(true);
-		logger.info("Exiting getConn()");
-		return conn;
-	}
-
-	public Domain getDomain() {
-		// retrives an instance of domain class
-		logger.info("Inside getDomain()");
-		Connection lConnection = getConn();
-		Domain domain = Factory.Domain.fetchInstance(lConnection, null, null);
-		logger.info("Domain: " + domain.get_Name());
-		System.out.println("Domain: " + domain.get_Name());
-		logger.info("Exiting getDomain()");
-		return domain;
-	}
-
-	public ObjectStore getObjectStore() {
-		// To fetch required object store by passing objstore name
-		logger.info("Inside getObjectStore()");
-		String objStoreName = ReadPropertyFile.getInstance().getPropConst().getProperty("objStoreName");
-		logger.info("objStoreName : " + objStoreName);
 		Domain lDomain = getDomain();
-		ObjectStore objStore = Factory.ObjectStore.fetchInstance(lDomain, objStoreName, null);
-		System.out.println("Object Store =" + objStore.get_DisplayName());
-		logger.info("Object Store =" + objStore.get_DisplayName());
-		logger.info("Exiting getObjectStore()");
+
+		ObjectStore objStore = Factory.ObjectStore.fetchInstance(lDomain, lObject_Store, null);
+
+		// logger.info("Object Store :::: " + objStore.get_DisplayName());
+
+		// logger.info("Successfully obtained a Object Store");
+
 		return objStore;
+	}
+
+	public Domain getDomain() throws UnsupportedEncodingException {
+
+		// logger.info("Getting Domain");
+
+		Connection lConnection = getConnection();
+
+		Domain domain = Factory.Domain.fetchInstance(lConnection, null, null);
+
+		// logger.info("Domain Name :::: " + domain.get_Name());
+
+		// logger.info("Successfully obtained a domain");
+
+		return domain;
+
+	}
+
+	private void getTOSDetails(String solutionName) throws Exception {
+
+		// logger.info("Getting TOS & Filenet Details");
+
+		ResultSet rs = null;
+
+		PreparedStatement preparedStmt = null;
+
+		java.sql.Connection connection = null;
+
+		try {
+			// DbConnection lDbConnection = new DbConnection();
+
+			// connection = lDbConnection.getDBConnection();
+
+			// String sqlQuery = "select * from TRAD_OBJECTSTORE_DETAILS where TRAD_SOLUTION
+			// = ?";
+
+			// logger.info("gettosdetails Query :::: " + sqlQuery);
+
+			// preparedStmt = connection.prepareStatement(sqlQuery);
+
+			// preparedStmt.setString(1, solutionName);
+
+			rs = preparedStmt.executeQuery();
+
+			while (rs.next()) {
+				lObject_Store = rs.getString("TRAD_OBJECTSTR");
+
+				lUser_Name = rs.getString("TRAD_USERNAME");
+
+				lPassword = rs.getString("TRAD_PASSWORD");
+
+				lFileNet_URL = rs.getString("TRAD_FILENET_URL");
+
+				// logger.info("DB FileNet URL :::: " + lFileNet_URL);
+
+				// logger.info("DB User Name :::: " + lUser_Name + " | Password :::: " +
+				// lPassword);
+			}
+
+			// logger.info("TOS and Filenet details were successfully obtained.");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			// logger.error("Exception is :::: " + e.getMessage(), e);
+			throw (e);
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (preparedStmt != null) {
+				preparedStmt.close();
+			}
+			if (connection != null) {
+				connection.close();
+			}
+		}
+	}
+
+	public Connection getConnection() throws UnsupportedEncodingException {
+
+		// logger.info("Getting Filenet Connection");
+
+		// logger.info("FileNet URL :::: " + lFileNet_URL);
+
+		// logger.info("User Name :::: " + lUser_Name + " | Password :::: " +
+		// lPassword);
+
+		Connection lConnection = Factory.Connection.getConnection(lFileNet_URL);
+
+		String lStanzaName = "FileNetP8WSI";
+
+		Subject lSubject = UserContext.createSubject(lConnection, lUser_Name, lPassword, lStanzaName);
+
+		UserContext.get().pushSubject(lSubject);
+
+		lUser_Context = UserContext.get();
+
+		setConnection(true);
+
+		// logger.info("The FileNet connection was established successfully.");
+
+		return lConnection;
 	}
 
 	public void popUserContext() {
-		gUserContext.popSubject();
-		logger.info("Connection PopOut");
+		lUser_Context.popSubject();
+		// logger.info("Connection PopOut");
 	}
 
 	public boolean isConnection() {
