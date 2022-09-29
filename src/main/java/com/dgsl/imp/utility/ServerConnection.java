@@ -22,7 +22,7 @@ public class ServerConnection {
 	private String lUser_Name = "p8admin";
 	private String lPassword = "Password123";
 
-	public ObjectStore getObjectStore(String pSolution) throws Exception {
+	public ObjectStore getObjectStore() throws Exception {
 
 		// logger.info("Getting Object Store");
 
@@ -53,66 +53,6 @@ public class ServerConnection {
 
 		return domain;
 
-	}
-
-	private void getTOSDetails(String solutionName) throws Exception {
-
-		// logger.info("Getting TOS & Filenet Details");
-
-		ResultSet rs = null;
-
-		PreparedStatement preparedStmt = null;
-
-		java.sql.Connection connection = null;
-
-		try {
-			// DbConnection lDbConnection = new DbConnection();
-
-			// connection = lDbConnection.getDBConnection();
-
-			// String sqlQuery = "select * from TRAD_OBJECTSTORE_DETAILS where TRAD_SOLUTION
-			// = ?";
-
-			// logger.info("gettosdetails Query :::: " + sqlQuery);
-
-			// preparedStmt = connection.prepareStatement(sqlQuery);
-
-			// preparedStmt.setString(1, solutionName);
-
-			rs = preparedStmt.executeQuery();
-
-			while (rs.next()) {
-				lObject_Store = rs.getString("TRAD_OBJECTSTR");
-
-				lUser_Name = rs.getString("TRAD_USERNAME");
-
-				lPassword = rs.getString("TRAD_PASSWORD");
-
-				lFileNet_URL = rs.getString("TRAD_FILENET_URL");
-
-				// logger.info("DB FileNet URL :::: " + lFileNet_URL);
-
-				// logger.info("DB User Name :::: " + lUser_Name + " | Password :::: " +
-				// lPassword);
-			}
-
-			// logger.info("TOS and Filenet details were successfully obtained.");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			// logger.error("Exception is :::: " + e.getMessage(), e);
-			throw (e);
-		} finally {
-			if (rs != null) {
-				rs.close();
-			}
-			if (preparedStmt != null) {
-				preparedStmt.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		}
 	}
 
 	public Connection getConnection() throws UnsupportedEncodingException {
