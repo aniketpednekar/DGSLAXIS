@@ -28,54 +28,27 @@ import com.filenet.api.core.ReferentialContainmentRelationship;
 public class FileServiceImpl implements FileService {
 
 	@Override
-	public String uplodeFile(MultipartFile file, String label) {
+	public String uplodeFile(String pFileLocation, String pTransactionId) {
+		String lStatus = "Failed";
 
 		try {
 			ServerConnection lServerConnection = new ServerConnection();
-			ObjectStore objStore = lServerConnection.getObjectStore("-");
-
-			String lFilePath = "H:\\Test\\";
-
-			String lFileName = file.getOriginalFilename();
-
-			String lFileLocation = lFilePath + lFileName;
-
+			ObjectStore objStore = lServerConnection.getObjectStore();
 			// Get the display name of the object store.
 			String lObjStoreName = objStore.get_DisplayName();
-
 			System.out.println("Object store name = " + lObjStoreName);
-
-			// String docClass =
-			// ReadPropertyFile.getInstance().getConstantProperty().getProperty("docClassName");
-			// logger.info("documentClassName :::: " + docClass);
 
 			// Create a document instance.
 			Document doc = Factory.Document.createInstance(objStore, ClassNames.DOCUMENT);
 
-			// Set document properties.
+			File files = new File(pFileLocation);
 
-//			doc.save(RefreshMode.NO_REFRESH);
-
-//			*****Document Upload from Local Code Start*******	
-
-			File newFile = new File(lFileLocation);
-
-			if (!newFile.getParentFile().exists()) {
-				newFile.getParentFile().mkdirs();
-			}
-
-			FileCopyUtils.copy(file.getBytes(), newFile);
-//			logger.info("File Copied successfully");
-
-			File files = new File(lFileLocation);
-
-			lFileName = files.getName();
+			String lFileName = files.getName();
 
 			FileInputStream fileInput = new FileInputStream(files);
 
 			String mimeType = "application/docs";
 			String extension = lFileName.substring(lFileName.lastIndexOf(".") + 1);
-//			logger.info("Document extension :::: " + extension);
 
 			if (extension != null && extension != "") {
 				if (ReadPropertyFile.getInstance().getMIMEProp().getProperty(extension.toUpperCase()) != null) {
@@ -102,20 +75,24 @@ public class FileServiceImpl implements FileService {
 
 			doc.save(RefreshMode.NO_REFRESH);
 
+			// Create Sub Folder
+			String parentFolderPath = ReadPropertyFile.getInstance().getPropConst().getProperty("documentClassPath");
+			Folder parentFolder = Factory.Folder.getInstance(objStore, null, parentFolderPath);
+			Folder newFolder = parentFolder.createSubFolder(pTransactionId);
+			newFolder.save(RefreshMode.NO_REFRESH);
+
 			// File the document.
-			Folder folder = Factory.Folder.fetchInstance(objStore, "\\ARC", null);
-//			ReferentialContainmentRelationship rcr = folder.file(doc, AutoUniqueName.AUTO_UNIQUE, "Test.txt",
-//					DefineSecurityParentage.DO_NOT_DEFINE_SECURITY_PARENTAGE);
-//			rcr.save(RefreshMode.NO_REFRESH);
+			Folder folder = Factory.Folder.fetchInstance(objStore, parentFolderPath + "\\" + pTransactionId, null);
 
 			ReferentialContainmentRelationship rcr = folder.file(doc, AutoUniqueName.AUTO_UNIQUE, lFileName,
 					DefineSecurityParentage.DO_NOT_DEFINE_SECURITY_PARENTAGE);
 			rcr.save(RefreshMode.REFRESH);
+			lStatus = "Success";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return "success";
+		return lStatus;
 	}
 
 }

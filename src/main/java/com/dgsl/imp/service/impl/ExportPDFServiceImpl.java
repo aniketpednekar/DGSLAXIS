@@ -39,7 +39,7 @@ public class ExportPDFServiceImpl implements ExportPDFService {
 			htmlContent = htmlContent.replace("{TABLE-DATA}", tableStr);
 
 			System.out.println(
-					"*****************************************************************************************");
+					"******************************************************************************************");
 			System.out.println(htmlContent);
 
 			ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
