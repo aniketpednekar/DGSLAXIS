@@ -2,10 +2,15 @@ package com.dgsl.imp.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,50 +21,55 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.dgsl.imp.service.FileService;
+import com.dgsl.imp.utility.FileUtility;
+import com.dgsl.imp.utility.ReadPropertyFile;
+import com.lowagie.text.Document;
 
 @RestController
 public class FileController {
 
 	@Autowired
-	FileService service;
+	FileService fileService;
 
 	@CrossOrigin
 	@PostMapping(value = "/uplodeFile")
-	public @ResponseBody String uplodeFile(@RequestBody MultipartFile filename, @RequestParam("label") String label) {
-		System.out.println("File Name :::: " + filename.getOriginalFilename());
-		System.out.println("label :::: " + label);
-
-//		try {
-//			String filePath = "D:\\Test";
-//			String fileLoc = filePath + File.separator + filename.getOriginalFilename();
-//
-//			File newFile = new File(fileLoc);
-//
-//			// if the directory does not exist, create it
-//			if (!newFile.getParentFile().exists()) {
-//				newFile.getParentFile().mkdirs();
-//			}
-//
-//			FileCopyUtils.copy(filename.getBytes(), newFile);
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-
-		return service.uplodeFile(filename, label);
+	public @ResponseBody String uplodeFile(@RequestBody MultipartFile filename, @RequestParam("transactionId") String transactionId) {
+		String lStatus = "Failed";
+		System.out.println("File Name :::: " + filename.getOriginalFilename() + " transactionId :::: " + transactionId);
+		FileUtility lFileUtility = new FileUtility();
+		try {
+			String lLocation = lFileUtility.saveFileToFolder(filename);
+			lStatus = fileService.uplodeFile(lLocation, transactionId);
+			lFileUtility.deleteFolder();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return lStatus;
 	}
-
-	@CrossOrigin
+	
 	@GetMapping(value = "/pdf")
-	@Produces("application/pdf")
-	public javax.ws.rs.core.Response getPdf() throws Exception {
-		System.out.println("asakjskjkasdkjasd");
-		File file = new File("D:\\Test\\Presentation.pdf");
-		FileInputStream fileInputStream = new FileInputStream(file);
-		javax.ws.rs.core.Response.ResponseBuilder responseBuilder = javax.ws.rs.core.Response
-				.ok((Object) fileInputStream);
-		responseBuilder.type("application/pdf");
-		responseBuilder.header("Content-Disposition", "attachment; filename=restfile.pdf");
-		return responseBuilder.build();
+	public ResponseEntity<InputStreamResource> getTermsConditions() throws FileNotFoundException {
+		Document d = new Document();
+		String filePath = "E:\\MyDocument\\";
+        String lFileName = "test.txt";
+		File file = new File(filePath + lFileName);
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline;filename=" +lFileName);
+
+		InputStreamResource resource = new InputStreamResource(new FileInputStream(file));
+		String mimeType = "application/docs";
+		String extension = lFileName.substring(lFileName.lastIndexOf(".") + 1);
+
+		if (extension != null && extension != "") {
+			if (ReadPropertyFile.getInstance().getMIMEProp().getProperty(extension.toUpperCase()) != null) {
+				mimeType = ReadPropertyFile.getInstance().getMIMEProp().getProperty(extension.toUpperCase());
+			}
+		}
+
+		return ResponseEntity.ok().headers(headers).contentLength(file.length())
+                .contentType(MediaType.parseMediaType(mimeType))
+				.body(resource);
 	}
+
 
 }
