@@ -100,13 +100,7 @@
 			<version>1.18.22</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>pe</groupId>
-			<artifactId>pe</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\pe.jar</systemPath>
-		</dependency>
+		
 		<dependency>
 			<groupId>Jace</groupId>
 			<artifactId>Jace</artifactId>
@@ -114,46 +108,34 @@
 			<version>1.0</version>
 			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\Jace.jar</systemPath>
 		</dependency>
-		<dependency>
-			<groupId>acmapi</groupId>
-			<artifactId>acmapi</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\acmapi.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>peResources</groupId>
-			<artifactId>peResources</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\peResources.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>stax-api</groupId>
-			<artifactId>stax-api</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\stax-api.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>xlxpScanner</groupId>
-			<artifactId>xlxpScanner</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\xlxpScanner.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>xlxpScannerUtils</groupId>
-			<artifactId>xlxpScannerUtils</artifactId>
-			<scope>system</scope>
-			<version>1.0</version>
-			<systemPath>C:\Users\lenovo\Downloads\CopyFile\CopyFile\lib\xlxpScannerUtils.jar</systemPath>
-		</dependency>
+		
+		
+		
+		
+		
 		<!-- https://mvnrepository.com/artifact/javax.ws.rs/javax.ws.rs-api -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
 			<artifactId>javax.ws.rs-api</artifactId>
 			<version>2.1.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api -->
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<version>2.2</version>
+		</dependency>
+		<dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 
 	</dependencies>

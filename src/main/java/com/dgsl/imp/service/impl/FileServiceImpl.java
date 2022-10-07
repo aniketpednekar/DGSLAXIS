@@ -23,6 +23,7 @@ import com.filenet.api.core.Factory;
 import com.filenet.api.core.Folder;
 import com.filenet.api.core.ObjectStore;
 import com.filenet.api.core.ReferentialContainmentRelationship;
+import com.filenet.api.util.Id;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -34,6 +35,8 @@ public class FileServiceImpl implements FileService {
 		try {
 			ServerConnection lServerConnection = new ServerConnection();
 			ObjectStore objStore = lServerConnection.getObjectStore();
+			Document doc1 = Factory.Document.getInstance(objStore, ClassNames.DOCUMENT, new Id("{A26C3EF4-7C02-4D01-84CD-D3D7F1D5DA19}") );
+			FileInputStream f = (FileInputStream) doc1.accessContentStream(0);
 			// Get the display name of the object store.
 			String lObjStoreName = objStore.get_DisplayName();
 			System.out.println("Object store name = " + lObjStoreName);
